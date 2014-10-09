@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My View - Dygram Editor</title>
-	
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/jquery-ui.js"></script>
-	<script type="text/javascript" src="js/jquery-layout.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function () {
-		$('body').layout({ applyDemoStyles: true });
-	});
-	</script>
+	<meta charset="utf-8">
+	<title>jsTree test</title>
+
+	<link rel="stylesheet" href="lib/jstree/themes/default/style.min.css" />
 </head>
 <body>
-	<div class="pane ui-layout-center">Center</div>
-	<div class="pane ui-layout-west">West</div>
+	<div class="ui-layout-west">
+	  <div id="jstree">
+		<ul>
+		  <li>Root node 1
+			<ul>
+			  <li id="child_node_1">Child node 1</li>
+			  <li>Child node 2</li>
+			</ul>
+		  </li>
+		  <li>Root node 2</li>
+		</ul>
+	  </div>
+	  <div id="myModel"></div>
+	</div>  
+	<div class="drop ui-layout-center"></div>
+
+	<script src="lib/jquery/jquery-1.11.1.min.js"></script>
+	<script src="lib/jstree/jstree.min.js"></script>
+	<script src="lib/jquery-ui/jquery-ui.min.js"></script>
+	<script src="lib/ui-layout/jquery.layout.min.js"></script>
+	<script src="js/index.js"></script>  
 </body>
 </html>
