@@ -1,13 +1,27 @@
 $(document).ready(function() {
 
+	$(window).on( 'resize', function () {
+		$('.Row').height( $(window).width() / 5 + 10 );
+	}).resize();
+
 	$('body').layout({ applyDemoStyles: true });
 	
-  $("#jstree").jstree({
-    "core" : {
-      "check_callback" : true
-    },
-    "plugins" : [ "dnd" ]
-  });
+	loadData('');
+	
+	$("#jstree").jstree({
+	"core" : {
+	  "check_callback" : true,
+	  'data' : [{ "id" : "1", "parent" : "#", "text" : "Entity" }]
+	},
+	"plugins" : [ "dnd" ]
+	});
+	
+	$('#myModel').jstree({
+	'core' : {
+		"check_callback" : true,
+		'data' : [{ "id" : "1", "parent" : "#", "text" : "Entity" }]
+	}
+	});
 	
 	$(document)
 		.on('dnd_move.vakata', function(e, data){
@@ -28,11 +42,17 @@ $(document).ready(function() {
 			}
 		});
 	
-	$('#myModel').jstree({
-	'core' : {
-		"check_callback" : true,
-		'data' : [{ "id" : "1", "parent" : "#", "text" : "Entity" }]
-	}
-	});
+	$('#search').keyup(function(e){
+		if(e.which == 13){ 			//13 is enter in all browsers
+			loadData('a');
+		}
+	})
 
+	function loadData(str){
+		alert("READ")
+		$.get('db/database.txt', function(data) {
+			alert('reading file');
+		});
+	};
+	
   });
