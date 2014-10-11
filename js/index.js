@@ -55,24 +55,24 @@ $(document).ready(function() {
 	});
 	
 	$('#search').keyup(function(e){
-		if(e.which == 13)		//13 is enter in all browsers
-			loadNodes($(this).val());
+		var txt = $(this).val();
+
+		if(e.which == 13 || txt == '')		//13 is enter in all browsers
+			loadNodes(txt);
 	})
 	
 	function loadNodes(str){
 		var nodes = new Array();
 		var regex = "^" + str;
 		
-		jQuery.ajaxSetup({async:false});
-		$.get('db/database.txt', function(data){
+		$.ajax({ url: 'db/database.txt', async: false, success: function(data){
 			var all_nodes = data.split(';');
-			
+				
 			for(i = 0; i < all_nodes.length; i++)
 				if(all_nodes[i].match(regex))
-					nodes.push(all_nodes[i]);
-			
-		});
-		jQuery.ajaxSetup({async:true});
+					nodes.push(all_nodes[i]);			
+		}});
+		
 		var $model = $('#model');
 		var $root = $model.jstree(true).get_node('j1_0');
 		
