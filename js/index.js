@@ -1,26 +1,27 @@
 $(document).ready(function() {
-
 	$(window).on( 'resize', function () {
 		$('.Row').height( $(window).width() / 5 + 10 );
 	}).resize();
 
 	$('body').layout({ applyDemoStyles: true });
-	
-	loadData('');
-	
-	$("#jstree").jstree({
+		
+	$("#model").jstree({
 	"core" : {
 	  "check_callback" : true,
-	  'data' : [{ "id" : "1", "parent" : "#", "text" : "Entity" }]
+	  'data' : [{ "id" : "j1_0", "parent" : "#", "text" : "Entity" }]
 	},
 	"plugins" : [ "dnd" ]
 	});
 	
-	$('#myModel').jstree({
+	$('#view').jstree({
 	'core' : {
 		"check_callback" : true,
-		'data' : [{ "id" : "1", "parent" : "#", "text" : "Entity" }]
+		'data' : [{ "id" : "j1_0", "parent" : "#", "text" : "Entity" }]
 	}
+	});
+	
+	$('#model').on('loaded.jstree', function(){
+		loadNodes('');		
 	});
 	
 	$(document)
@@ -35,24 +36,44 @@ $(document).ready(function() {
 		}).on('dnd_stop.vakata', function(e, data){
 			var t = $(data.event.target);
 			if(t.closest('.drop').length) {
-				var $my_view = $('#myModel');
-				var $root = $my_view.jstree(true).get_node('1');
-				$my_view.jstree(true).create_node($root, data.element.text);
-				$my_view.jstree(true).open_all();
+				var $view = $('#view');
+				var $root = $view.jstree(true).get_node('j1_0');
+				$view.jstree(true).create_node($root, data.element.text);
+				$view.jstree(true).open_all();
 			}
 		});
 	
 	$('#search').keyup(function(e){
-		if(e.which == 13){ 			//13 is enter in all browsers
-			loadData('a');
+		if(e.which == 13){			//13 is enter in all browsers
+			loadNodes($(this).val());
 		}
 	})
-
-	function loadData(str){
-		alert("READ")
-		$.get('db/database.txt', function(data) {
-			alert('reading file');
+	
+	function loadNodes(str){
+		var nodes = new Array();
+		var regex = "^" + str;
+		
+		jQuery.ajaxSetup({async:false});
+		$.get('db/database.txt', function(data){
+			var all_nodes = data.split(';');
+			
+			for(i = 0; i < all_nodes.length; i++)
+				if(all_nodes[i].match(regex))
+					nodes.push(all_nodes[i]);
+			
 		});
-	};
+		jQuery.ajaxSetup({async:true});
+		var $model = $('#model');
+		var $root = $model.jstree(true).get_node('j1_0');
+		
+		$model.jstree(true).get_children_dom($root).each(function(){
+			$model.jstree(true).delete_node(this.id);
+		});
+		
+		for(i = 0; i < nodes.length; i++)
+			$model.jstree(true).create_node($root, nodes[i]);	
+		
+		$model.jstree(true).open_all();
+	}
 	
   });
