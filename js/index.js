@@ -1,16 +1,33 @@
 $(document).ready(function() {
-	$(window).on( 'resize', function () {
-		$('.Row').height( $(window).width() / 5 + 10 );
-	}).resize();
 
+	//table height	
+	setTableContainerHeight();
+
+	$(window).on( 'resize', function () {
+		setTableContainerHeight();
+	});	
+	
+	function setTableContainerHeight(){		
+		var content_padding = (10 + 1) * 2 + 1;
+		var table_margin = 10 * 2;
+		var header_height = 32;
+		var input_field_height = $('.form-group').outerHeight();
+		var window_height = $(window).height();
+		var new_table_height = (window_height - input_field_height) / 2 - content_padding - table_margin - header_height;
+		$('.table-container').height(new_table_height);
+	};	
+	
+	//layout
 	$('body').layout({ applyDemoStyles: true });
-		
+	
+	//jstree
 	$("#model").jstree({
 		"core" : {
 			"check_callback" : function (operation) {
 				return operation === "move_node" ? false : true;
 			},
-			'data' : [{ "id" : "j1_0", "parent" : "#", "text" : "Entity", "icon" : "jstree-folder" }]
+			'data' : [{ "id" : "j1_0", "parent" : "#", "text" : "Entity", "icon" : "jstree-folder" }],
+			'multiple' : false
 		},	
 		'types' : {
 			"default" : {
@@ -23,7 +40,8 @@ $(document).ready(function() {
 	$('#view').jstree({
 		'core' : {
 			"check_callback" : true,
-			'data' : [{ "id" : "j1_0", "parent" : "#", "text" : "Entity", "icon" : "jstree-folder" }]
+			'data' : [{ "id" : "j1_0", "parent" : "#", "text" : "Entity", "icon" : "jstree-folder" }],
+			'multiple' : false
 		},	
 		'types' : {
 			"default" : {
@@ -56,7 +74,6 @@ $(document).ready(function() {
 	
 	$('#search').keyup(function(e){
 		var txt = $(this).val();
-
 		if(e.which == 13 || txt == '')		//13 is enter in all browsers
 			loadNodes(txt);
 	})

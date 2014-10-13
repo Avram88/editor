@@ -8,28 +8,50 @@
 	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body>		
 	<div class="ui-layout-west">
-		<input id="search" type="text" placeholder="Quick search" />
-		<div class="Table">
-			<div class="Heading">
-				<div class="Cell">Dygram Model</div>
-			</div>
-			<div class="Row">
-				<div id="model" class="Cell"></div>
+		<div class="form-group">
+			<input id="search" type="text" class="form-control" placeholder="Quick search" />
+		</div>
+		<div class="panel panel-default">
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th>Dygram Model</th>
+					</tr>
+				</thead>
+			</table>		
+			<div class="table-container">
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td><div id="model"></div></td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-		<div class="Table">
-			<div class="Heading">
-				<div class="Cell">My View</div>		
-			</div>
-			<div class="Row">
-				<div id="view" class="Cell"></div>
-			</div>
-		</div>
-	</div>  
+		<div class="panel panel-default">
+			<table class="table table-condensed">
+				<thead>
+					<tr>
+						<th>View Model</th>
+					</tr>
+				</thead>
+			</table>		
+			<div class="table-container">
+				<table class="table table-condensed">
+					<tbody>
+						<tr>
+							<td><div id="view"></div></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>	
+		</div>			
+	</div>
 	<div class="drop ui-layout-center"></div>
-
+	
 	<script src="lib/jquery/jquery-1.11.1.min.js"></script>
 	<script src="lib/jstree/jstree.min.js"></script>
 	<script src="lib/jquery-ui/jquery-ui.min.js"></script>
